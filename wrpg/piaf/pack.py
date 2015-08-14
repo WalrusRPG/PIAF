@@ -19,7 +19,6 @@ def pack_header(archive, packed_filetable, data_size):
     header_data = struct.pack(structure[0]+structure[5:], archive["version"], nb_files, data_size)
     checksum_header = zlib.crc32(header_data)
     checksum_filetable = zlib.crc32(packed_filetable)
-    print(checksum_filetable)
 
     return struct.pack(structure,
         b"WRPGPIAF",
@@ -38,21 +37,3 @@ def pack_archive(archive):
     header = pack_header(archive, file_table, data_size)
     data = pack_data(archive)
     return header+file_table+data
-
-
-if __name__ == '__main__':
-    result = pack_archive({
-        "version": 0,
-        "file_entries": [{
-            "file_type":1,
-            "compression_type": 0,
-            "data": b"The Game"
-            },
-            {
-            "file_type":1,
-            "compression_type": 0,
-            "data": b"Ha, you lost it!"
-            }
-        ]
-    })
-    print(result)
