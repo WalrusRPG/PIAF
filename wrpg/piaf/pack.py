@@ -1,6 +1,6 @@
 import struct
 import zlib
-from common import (archive_structure, file_entry_structure)
+from wrpg.piaf.common import (archive_structure, file_entry_structure)
 
 def pack_filetable(archive):
     file_table = b''

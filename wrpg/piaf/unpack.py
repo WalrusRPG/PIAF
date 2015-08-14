@@ -1,6 +1,6 @@
 import struct
 import zlib
-from common import (archive_structure, file_entry_structure, get_data_offset)
+from wrpg.piaf.common import (archive_structure, file_entry_structure, get_data_offset)
 
 class ParserError(Exception):
     pass
