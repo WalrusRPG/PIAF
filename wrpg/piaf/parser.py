@@ -1,6 +1,4 @@
 import struct
-import string
-import unittest
 import zlib
 from .common import (archive_structure, file_entry_structure)
 
