@@ -22,4 +22,4 @@ def file_entry_structure():
     )
 
 def get_data_offset(nb_files):
-    return 32+24*nb_files
+    return 32+16*nb_files
