@@ -11,21 +11,21 @@ def pack_filetable(archive):
         file_table += struct.pack(file_entry_structure(), f["file_type"], f["compression_type"], file_size, data_offset)
         data_size += file_size
 
-    return file_table, data_size
+    return file_table
 
-def pack_header(archive, packed_filetable, data_size):
+def pack_header(archive, packed_filetable):
     structure = archive_structure()
-    nb_files = len(archive["file_entries"])
-    header_data = struct.pack(structure[0]+structure[5:], archive["version"], nb_files, data_size)
-    checksum_header = zlib.crc32(header_data)
-    checksum_filetable = zlib.crc32(packed_filetable)
+    data_size = sum([len(f["data"]) for f in archive["file_entries"]])
+    # Little hack to parse only the data part of the strucutre.
+    # Should evolve as the structure definition does.
+    header_data = struct.pack(structure[0]+structure[5:], archive["version"], len(archive["file_entries"]), data_size)
 
     return struct.pack(structure,
         b"WRPGPIAF",
-        checksum_header,
-        checksum_filetable,
+        zlib.crc32(header_data),
+        zlib.crc32(packed_filetable),
         archive["version"],
-        nb_files,
+        len(archive["file_entries"]),
         data_size
     )
 
@@ -33,7 +33,7 @@ def pack_data(archive):
     return b''.join([f["data"] for f in archive["file_entries"]])
 
 def pack_archive(archive):
-    file_table, data_size = pack_filetable(archive)
-    header = pack_header(archive, file_table, data_size)
+    file_table = pack_filetable(archive)
+    header = pack_header(archive, file_table)
     data = pack_data(archive)
     return header+file_table+data
