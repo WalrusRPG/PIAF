@@ -3,7 +3,7 @@ import os
 import json
 import struct
 
-from wrpg.piaf import unpack
+from wrpg.piaf import unpack, pack
 from wrpg.piaf.unpack import (
     ParserError,
     ParserMagicHeaderError,
@@ -18,7 +18,8 @@ valid_folder='valid'
 
 
 class TestParser (unittest.TestCase):
-    def test_valid_samples(self):
+
+    def test_valid_unpack(self):
         #print('Valid samples testing.\n')
         valid_folder_path = os.path.join(sample_directory, valid_folder)
         valid_expected_folder = os.path.join(sample_directory, valid_folder+expected_suffix)
@@ -35,7 +36,7 @@ class TestParser (unittest.TestCase):
                 archive = unpack.unpack_archive(sample.read())
                 self.assertEqual(archive, json.load(expected))
 
-    def test_invalid_samples(self):
+    def test_invalid_unpack(self):
         ### Header
         # Emtpy argument
         with self.assertRaises(struct.error):
@@ -62,3 +63,27 @@ class TestParser (unittest.TestCase):
             # Bad size because wrong file number
             unpack.unpack_archive(b'WRPGPIAF\xc6\x0f\x16#\0\0\0\0\0\0\0\0\r\x0e\n\r\0\0\0\0\0\0\0\0')
         ### Files
+
+    def test_pack_unpack(self):
+        files = [
+        {
+            "version": 0,
+            "file_entries": []
+        },
+        {
+            "version": 0,
+            "file_entries": [{
+                "file_type":1,
+                "compression_type": 0,
+                "data": b"The Game"
+                },
+                {
+                "file_type":1,
+                "compression_type": 0,
+                "data": b"Ha, you lost it!"
+                }
+            ]
+        },
+        ]
+        for f in files:
+            self.assertDictEqual(f, unpack.unpack_archive(pack.pack_archive(f)))
