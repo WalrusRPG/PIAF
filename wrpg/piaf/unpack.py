@@ -53,24 +53,26 @@ def parse_header(buffer):
 
 def parse_filetable(buffer, archive, nb_files):
     result = []
-    for i in range(0, nb_files):
+    file_sizes = []
+    for i in range(nb_files):
         file_type, compression_type, file_size, data_offset = struct.unpack(file_entry_structure(), buffer[32+16*i:32+16*(i+1)])
         file_entry = {
             "file_type": file_type,
-            "compression_type": compression_type,
-            "file_size": file_size,
-            "data_offset": data_offset
+            "compression_type": compression_type
             }
         result.append(file_entry)
-    return result
+        file_sizes.append(file_size)
+    return result, file_sizes
 
-def load_data(buffer, archive):
-    for f in archive["file_entries"]:
+def load_data(buffer, archive, file_sizes):
+    data_offset = 0
+    for f, file_size in zip(archive["file_entries"], file_sizes):
         data_start = get_data_offset(len(archive["file_entries"]))
-        f["data"] = buffer[data_start+f["data_offset"]: data_start+f["data_offset"]+f["file_size"]]
+        f["data"] = buffer[data_start+data_offset: data_start+data_offset+file_size]
+        data_offset += file_size
 
 def unpack_archive(buffer):
     archive, nb_files = parse_header(buffer)
-    archive["file_entries"] = parse_filetable(buffer, archive, nb_files)
-    load_data(buffer, archive)
+    archive["file_entries"], file_sizes = parse_filetable(buffer, archive, nb_files)
+    load_data(buffer, archive, file_sizes)
     return archive
