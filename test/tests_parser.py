@@ -32,33 +32,33 @@ class TestParser (unittest.TestCase):
                                          f+'.json')
             #print('{} => {}'.format(path_sample, path_expected))
             with open(path_sample, 'br') as sample, open(path_expected, 'r') as expected:
-                archive = parser.parse_archive(sample.read())
+                archive = parser.unpack_archive(sample.read())
                 self.assertEqual(archive, json.load(expected))
 
     def test_invalid_samples(self):
         ### Header
         # Emtpy argument
         with self.assertRaises(struct.error):
-            parser.parse_archive(b'')
+            parser.unpack_archive(b'')
 
         # Header too small
         with self.assertRaises(struct.error):
-            parser.parse_archive(b'The Game')
+            parser.unpack_archive(b'The Game')
 
         # Bad header
         with self.assertRaises(ParserMagicHeaderError):
-            parser.parse_archive(b'ERRHEADER\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0')
+            parser.unpack_archive(b'ERRHEADER\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0')
 
         # Bad checksum
         with self.assertRaises(ParserChecksumError):
             # Wrong header checksum
-            parser.parse_archive(b'WRPGPIAF\x0D\x0E\x0A\x0D\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0')
+            parser.unpack_archive(b'WRPGPIAF\x0D\x0E\x0A\x0D\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0')
         with self.assertRaises(ParserChecksumError):
             # Wrong filetable checksum
-            parser.parse_archive(b'WRPGPIAF\0\0\0\0\x0D\x0E\x0A\x0D\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0')
+            parser.unpack_archive(b'WRPGPIAF\0\0\0\0\x0D\x0E\x0A\x0D\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0')
 
         # Wrong data size
         with self.assertRaises(ParserDatasizeError):
             # Bad size because wrong file number
-            parser.parse_archive(b'WRPGPIAF\xc6\x0f\x16#\0\0\0\0\0\0\0\0\r\x0e\n\r\0\0\0\0\0\0\0\0')
+            parser.unpack_archive(b'WRPGPIAF\xc6\x0f\x16#\0\0\0\0\0\0\0\0\r\x0e\n\r\0\0\0\0\0\0\0\0')
         ### Files

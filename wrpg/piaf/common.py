@@ -20,3 +20,6 @@ def file_entry_structure():
         "I" # File Size
         "I" # Data Offset
     )
+
+def get_data_offset(nb_files):
+    return 32+24*nb_files
