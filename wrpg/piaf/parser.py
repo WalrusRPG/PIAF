@@ -1,7 +1,7 @@
 import struct
 import string
 import unittest
-import binascii
+import zlib
 from .common import (archive_structure, file_entry_structure)
 
 class ParserError(Exception):
@@ -19,11 +19,11 @@ class ParserDatasizeError(ParserError):
 
 def check_archive(buffer, archive, checksum_header, checksum_filetable):
     def check_header(buffer):
-        return binascii.crc32(buffer[16:32], 0) & 0xffffffff
+        return zlib.crc32(buffer[16:32], 0) & 0xffffffff
 
     def check_filetable(buffer, archive):
         filetable_end = 32+24*archive["nb_files"]
-        return binascii.crc32(buffer[32:filetable_end]) & 0xffffffff
+        return zlib.crc32(buffer[32:filetable_end]) & 0xffffffff
 
     file_checksum_header = check_header(buffer)
     if file_checksum_header != checksum_header:
