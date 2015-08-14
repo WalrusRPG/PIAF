@@ -11,30 +11,30 @@ from wrpg.piaf.unpack import (
     ParserDatasizeError
 )
 
-sample_directory='test/samples/'
+sample_directory=os.path.join("test","samples")
 expected_suffix='_expected'
 valid_folder='valid'
 
+def get_files_ending_with(folder, ending):
+    return [os.path.join(folder,f) for f in os.listdir(folder)
+                  if os.path.isfile(os.path.join(folder, f))
+                  and f.endswith(ending)]
 
+
+def get_sample_files_and_expected(root_folder, base_folder_name):
+    sample_folder = os.path.join(root_folder, base_folder_name)
+    expected_folder = os.path.join(root_folder, base_folder_name+expected_suffix)
+    list_samples = get_files_ending_with(sample_folder, ".wrf")
+    list_expected = get_files_ending_with(expected_folder, ".wrf.json")
+    return list_samples, list_expected
 
 class TestParser (unittest.TestCase):
 
     def test_valid_unpack(self):
-        #print('Valid samples testing.\n')
-        valid_folder_path = os.path.join(sample_directory, "unpack", valid_folder)
-        valid_expected_folder = os.path.join(sample_directory, "unpack", valid_folder+expected_suffix)
-        list_files = [f for f in os.listdir(valid_folder_path)
-                      if os.path.isfile(os.path.join(valid_folder_path, f))
-                      and f.endswith(".wrf")]
-
-        for f in list_files:
-            path_sample = os.path.join(sample_directory, "unpack", valid_folder, f)
-            path_expected = os.path.join(sample_directory, "unpack", valid_folder+expected_suffix,
-                                         f+'.json')
-            #print('{} => {}'.format(path_sample, path_expected))
-            with open(path_sample, 'br') as sample, open(path_expected, 'r') as expected:
-                archive = unpack.unpack_archive(sample.read())
-                self.assertEqual(archive, json.load(expected))
+        list_samples, list_expected = get_sample_files_and_expected(os.path.join(sample_directory, "unpack"), "valid")
+        for sample_path, expected_path in zip(list_samples, list_expected):
+            with open(sample_path, "rb") as sample, open(expected_path, "r") as expected:
+                    self.assertEqual(unpack.unpack_archive(sample.read()), json.load(expected))
 
     def test_invalid_unpack(self):
         ### Header
@@ -81,6 +81,11 @@ class TestParser (unittest.TestCase):
                 "file_type":1,
                 "compression_type": 0,
                 "data": b"Ha, you lost it!"
+                },
+                {
+                "file_type": 0,
+                "compression_type": 1,
+                "data": b"\0Test test test \0"
                 }
             ]
         },
