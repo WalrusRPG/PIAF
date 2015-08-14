@@ -1,0 +1,1 @@
+{"metadata": {"command": "C:\\Dev\\Python34\\python.exe -m nose --with-json-extended", "cwd": "C:\\Dev\\Python\\WRPG-PIAF", "time": 1439480011.192548}, "modules": [{"nr_error": 0, "name": "test.tests_parser.TestParser", "nr_failed": 0, "nr_success": 2, "testcases": [{"name": "test_invalid_samples", "result": "success"}, {"name": "test_valid_samples", "result": "success"}]}]}
