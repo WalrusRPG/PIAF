@@ -18,7 +18,12 @@ class TestUnpack (unittest.TestCase):
         list_samples, list_expected = get_sample_files_and_expected(os.path.join(sample_directory, "unpack"), "valid")
         for sample_path, expected_path in zip(list_samples, list_expected):
             with open(sample_path, "rb") as sample, open(expected_path, "r") as expected:
-                    self.assertEqual(unpack.unpack_archive(sample.read()), json.load(expected))
+                    # Little hack to support JSON's non-byte strings.
+                    expected_data = json.load(expected)
+                    for f in expected_data["file_entries"]:
+                        if "data" in f:
+                            f["data"] = bytes(f["data"], "ascii")
+                    self.assertEqual(unpack.unpack_archive(sample.read()), expected_data)
 
     def test_invalid_unpack(self):
         ### Header
