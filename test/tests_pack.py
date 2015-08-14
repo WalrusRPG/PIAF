@@ -21,15 +21,15 @@ class TestParser (unittest.TestCase):
 
     def test_valid_unpack(self):
         #print('Valid samples testing.\n')
-        valid_folder_path = os.path.join(sample_directory, valid_folder)
-        valid_expected_folder = os.path.join(sample_directory, valid_folder+expected_suffix)
+        valid_folder_path = os.path.join(sample_directory, "unpack", valid_folder)
+        valid_expected_folder = os.path.join(sample_directory, "unpack", valid_folder+expected_suffix)
         list_files = [f for f in os.listdir(valid_folder_path)
                       if os.path.isfile(os.path.join(valid_folder_path, f))
                       and f.endswith(".wrf")]
 
         for f in list_files:
-            path_sample = os.path.join(sample_directory, valid_folder, f)
-            path_expected = os.path.join(sample_directory, valid_folder+expected_suffix,
+            path_sample = os.path.join(sample_directory, "unpack", valid_folder, f)
+            path_expected = os.path.join(sample_directory, "unpack", valid_folder+expected_suffix,
                                          f+'.json')
             #print('{} => {}'.format(path_sample, path_expected))
             with open(path_sample, 'br') as sample, open(path_expected, 'r') as expected:
