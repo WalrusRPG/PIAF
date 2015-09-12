@@ -39,11 +39,12 @@ def header_check_size():
 
 def file_entry_structure():
     return (
-        ">" # Big Endian
-        "I" # File Type
-        "I" # Compression type
-        "I" # File Size
-        "I" # Data Offset
+        ">"  # Big Endian
+        "8s" # Filename
+        "I"  # File Type
+        "I"  # Compression type
+        "I"  # File Size
+        "I"  # Data Offset
     )
 
 def file_entry_size():

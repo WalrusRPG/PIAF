@@ -74,9 +74,10 @@ def unpack_archive(buffer):
         file_sizes = []
         for i in range(nb_files):
             file_entry_offset = header_size()+file_entry_size()*i
-            file_type, compression_type, file_size, data_offset = struct.unpack(
-                file_entry_structure(),
-                buffer[ file_entry_offset: file_entry_offset+file_entry_size()]
+            file_name, file_type, compression_type, file_size, data_offset =\
+		struct.unpack(
+	                file_entry_structure(),
+                	buffer[ file_entry_offset: file_entry_offset+file_entry_size()]
                 )
 
             file_entry = { "file_type": file_type,

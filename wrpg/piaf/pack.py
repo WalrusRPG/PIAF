@@ -8,7 +8,7 @@ def pack_filetable(archive):
     for f in archive['file_entries']:
         data_offset = data_size
         file_size = len(f["data"])
-        file_table += struct.pack(file_entry_structure(), f["file_type"], f["compression_type"], file_size, data_offset)
+        file_table += struct.pack(file_entry_structure(), f["file_name"], f["file_type"], f["compression_type"], file_size, data_offset)
         data_size += file_size
 
     return file_table
