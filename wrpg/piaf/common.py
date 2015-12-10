@@ -1,5 +1,21 @@
+from enum import IntEnum
 import struct
 
+PIAF_VERSION = 0x01000000
+
+
+class FileType(IntEnum):
+    UNKNOWN = 0
+    MAP = 1
+    EVENT_LIST = 2
+    TEXT = 3
+    TEXTURE = 4
+
+class CompressionType(IntEnum):
+    UNKNWOWN = 0
+    RAW = 1
+    ZLIB = 2
+    RLE = 3
 
 def header_check_structure():
     return (
