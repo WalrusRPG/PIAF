@@ -5,13 +5,13 @@ from wrpg.piaf.common import FileType, CompressionType, PIAF_VERSION
 minimal_data = {"version": PIAF_VERSION,
 "file_entries":[
 {
-	"path": "data/press.png",
+	"path": "data/core/press.png",
 	"file_name": "t_dbgfnt",
 	"compression_type": CompressionType.RAW,
 	"file_type": FileType.TEXTURE	
 },
 {
-	"path": "data/press",
+	"path": "data/core/press",
 	"file_name": "f_dbgfnt",
 	"compression_type": CompressionType.RAW,
 	"file_type": FileType.UNKNOWN	
@@ -19,32 +19,32 @@ minimal_data = {"version": PIAF_VERSION,
 ]
 }
 
-files_to_bundle = {"version": PIAF_VERSION,
+wip_wrpg_data = {"version": PIAF_VERSION,
 "file_entries":[
 {
-	"path": "data/overworld.png",
+	"path": "data/wip_data/overworld.png",
 	"file_name": "ov.png",
 	"compression_type": CompressionType.RAW,
 	"file_type": FileType.TEXTURE
 },
-{	"path": "data/l1.bin",
+{	"path": "data/wip_data/l1.bin",
 	"file_name": "l1.bin",
 	"compression_type": CompressionType.RAW,
 	"file_type": FileType.UNKNOWN
 },
-{	"path": "data/l2.bin",
+{	"path": "data/wip_data/l2.bin",
 	"file_name": "l2.bin",
 	"compression_type": CompressionType.RAW,
 	"file_type": FileType.UNKNOWN
 },
 {
-	"path": "data/haeccity.png",
+	"path": "data/wip_data/haeccity.png",
 	"file_name": "t_haecci",
 	"compression_type": CompressionType.RAW,
 	"file_type": FileType.TEXTURE	
 },
 {
-	"path": "data/haeccity",
+	"path": "data/wip_data/haeccity",
 	"file_name": "f_haecci",
 	"compression_type": CompressionType.RAW,
 	"file_type": FileType.UNKNOWN	
@@ -63,4 +63,4 @@ def bundle(files, path_out):
 
 if __name__ == '__main__':
 	bundle(minimal_data, "wrpg_core.wrf")
-	bundle(files_to_bundle, "out.wrf")
+	bundle(wip_wrpg_data, "out.wrf")
