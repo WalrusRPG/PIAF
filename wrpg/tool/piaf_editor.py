@@ -2,7 +2,9 @@
 import json
 import gi
 from ..piaf import common
+from ..piaf import pack
 from ..piaf.common import FileType
+from ..piaf.common import CompressionType
 from os import path
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
@@ -84,6 +86,23 @@ class PIAFMainWindow:
                     f.write(string)
             file_chooser.destroy()
 
+        def compile_file(self, button):
+            file_chooser = Gtk.FileChooserDialog("Save", self.window, Gtk.FileChooserAction.SAVE,
+        (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
+         Gtk.STOCK_OPEN, Gtk.ResponseType.OK))
+            wrf = Gtk.FileFilter()
+            wrf.set_name('WalrusRPG Archive file')
+            wrf.add_pattern('*.wrf')
+            file_chooser.add_filter(wrf)
+            response = file_chooser.run()           
+            if response == Gtk.ResponseType.OK:
+                j = {"version": common.PIAF_VERSION, "file_entries": [{"path": f["path"], "file_name":f["name"].encode('ascii'), "compression_type":CompressionType(f["compression"]), "file_type":FileType(f["type"]), "data":open(f["path"], "rb").read()} for f in self.files]}
+                arc = pack.pack_archive(j)
+                with open(file_chooser.get_filename(), 'wb+') as f:
+                    f.write(arc)
+            file_chooser.destroy()
+           
+
         def add_file(self, button):
             file_chooser = Gtk.FileChooserDialog("Open", self.window, Gtk.FileChooserAction.OPEN,
         (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
@@ -135,7 +154,7 @@ class PIAFMainWindow:
 
         def __init__(self):
             builder = Gtk.Builder()
-            builder.add_from_file(path.join(path.dirname(__file__),"main.glade"))
+            builder.add_from_file(path.join(path.dirname(__file__),"piaf_editor.glade"))
             builder.connect_signals(self)
 
             self.file_model = builder.get_object("files_view_model")
