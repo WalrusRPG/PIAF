@@ -12,7 +12,7 @@ class FileType(IntEnum):
     TEXTURE = 4
 
 class CompressionType(IntEnum):
-    UNKNWOWN = 0
+    UNKNOWN = 0
     RAW = 1
     ZLIB = 2
     RLE = 3
