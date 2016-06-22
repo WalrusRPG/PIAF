@@ -19,16 +19,6 @@
       <!-- column-name name -->
       <column type="gchararray"/>
     </columns>
-    <data>
-      <row>
-        <col id="0">0</col>
-        <col id="1" translatable="yes">UNKNOWN</col>
-      </row>
-      <row>
-        <col id="0">1</col>
-        <col id="1" translatable="yes">RAW</col>
-      </row>
-    </data>
   </object>
   <object class="GtkListStore" id="file_type_model">
     <columns>
@@ -37,28 +27,6 @@
       <!-- column-name name -->
       <column type="gchararray"/>
     </columns>
-    <data>
-      <row>
-        <col id="0">0</col>
-        <col id="1" translatable="yes">Unknown</col>
-      </row>
-      <row>
-        <col id="0">1</col>
-        <col id="1" translatable="yes">Map</col>
-      </row>
-      <row>
-        <col id="0">2</col>
-        <col id="1" translatable="yes">Event List</col>
-      </row>
-      <row>
-        <col id="0">3</col>
-        <col id="1" translatable="yes">Text</col>
-      </row>
-      <row>
-        <col id="0">4</col>
-        <col id="1" translatable="yes">Texture</col>
-      </row>
-    </data>
   </object>
   <object class="GtkListStore" id="files_view_model">
     <columns>

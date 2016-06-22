@@ -1,4 +1,3 @@
-#!/bin/python
 import json
 import gi
 from ..piaf import common
@@ -159,7 +158,11 @@ class PIAFMainWindow:
 
             self.file_model = builder.get_object("files_view_model")
             self.type_model = builder.get_object("file_type_model")
+            for t in FileType:
+                self.type_model.append([t.value, t.name])
             self.compression_model = builder.get_object("file_compression_model")
+            for c in CompressionType:
+                self.compression_model.append([c.value, c.name])
             self.tree_view = builder.get_object("list_view")
             self.selected_entry = builder.get_object("selected_entry")
 
