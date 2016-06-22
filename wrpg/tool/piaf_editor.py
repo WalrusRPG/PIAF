@@ -9,6 +9,10 @@ gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 
 class PIAFMainWindow:
+
+        def clear_tree_view(self):
+            self.tree_view.get_model().clear()
+
         def update_tree_view(self):
                 index = 0
                 tv_len = len(self.tree_view.get_model())
@@ -43,7 +47,9 @@ class PIAFMainWindow:
         def new_archive(self, button):
                 self.files = []
                 self.selected_entry = None
+                self.clear_tree_view()
                 self.update_tree_view()
+                self.clear_entry_view()
 
         def open_archive(self, button):
             file_chooser = Gtk.FileChooserDialog("Open", self.window, Gtk.FileChooserAction.OPEN,
