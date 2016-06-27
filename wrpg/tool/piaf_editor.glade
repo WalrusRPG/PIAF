@@ -64,6 +64,7 @@
     <property name="can_focus">False</property>
     <property name="title" translatable="yes">PIAF Tool</property>
     <property name="icon_name">media-floppy</property>
+    <property name="show_menubar">False</property>
     <child>
       <object class="GtkBox">
         <property name="visible">True</property>
@@ -84,10 +85,12 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
+                    <property name="tooltip_text" translatable="yes">New Archive</property>
                     <property name="halign">start</property>
                     <property name="valign">start</property>
                     <property name="image">new_icon</property>
                     <signal name="clicked" handler="new_archive" swapped="no"/>
+                    <accelerator key="n" signal="clicked" modifiers="GDK_CONTROL_MASK"/>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -100,10 +103,12 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
+                    <property name="tooltip_text" translatable="yes">Open Archive</property>
                     <property name="halign">start</property>
                     <property name="valign">start</property>
                     <property name="image">open_icon</property>
                     <signal name="clicked" handler="open_archive" swapped="no"/>
+                    <accelerator key="o" signal="clicked" modifiers="GDK_CONTROL_MASK"/>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -116,10 +121,12 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
+                    <property name="tooltip_text" translatable="yes">Save Archive</property>
                     <property name="halign">start</property>
                     <property name="valign">start</property>
                     <property name="image">save_icon</property>
                     <signal name="clicked" handler="save_archive" swapped="no"/>
+                    <accelerator key="s" signal="clicked" modifiers="GDK_CONTROL_MASK"/>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -128,30 +135,32 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkButton" id="new_file">
+                  <object class="GtkButton" id="compile_file">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
-                    <property name="halign">start</property>
-                    <property name="valign">start</property>
-                    <property name="image">new_file_icon</property>
-                    <signal name="clicked" handler="add_file" swapped="no"/>
+                    <property name="tooltip_text" translatable="yes">Export Archive</property>
+                    <property name="image">compile_icon</property>
+                    <signal name="clicked" handler="compile_file" swapped="no"/>
+                    <accelerator key="e" signal="clicked" modifiers="GDK_CONTROL_MASK"/>
                   </object>
                   <packing>
                     <property name="expand">False</property>
-                    <property name="fill">False</property>
+                    <property name="fill">True</property>
                     <property name="position">3</property>
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkButton" id="delete_file">
+                  <object class="GtkButton" id="new_file">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
+                    <property name="tooltip_text" translatable="yes">Add a File</property>
                     <property name="halign">start</property>
                     <property name="valign">start</property>
-                    <property name="image">delete_file_icon</property>
-                    <signal name="clicked" handler="delete_file" swapped="no"/>
+                    <property name="image">new_file_icon</property>
+                    <signal name="clicked" handler="add_file" swapped="no"/>
+                    <accelerator key="ampersand" signal="clicked" modifiers="GDK_MOD1_MASK"/>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -160,16 +169,20 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkButton" id="compile_file">
+                  <object class="GtkButton" id="delete_file">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
-                    <property name="image">compile_icon</property>
-                    <signal name="clicked" handler="compile_file" swapped="no"/>
+                    <property name="tooltip_text" translatable="yes">Remove a File</property>
+                    <property name="halign">start</property>
+                    <property name="valign">start</property>
+                    <property name="image">delete_file_icon</property>
+                    <signal name="clicked" handler="delete_file" swapped="no"/>
+                    <accelerator key="d" signal="clicked" modifiers="GDK_MOD1_MASK"/>
                   </object>
                   <packing>
                     <property name="expand">False</property>
-                    <property name="fill">True</property>
+                    <property name="fill">False</property>
                     <property name="position">5</property>
                   </packing>
                 </child>
